@@ -12,19 +12,17 @@ export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
-useEffect(() => {
+  useEffect(() => {
     if (!user) return;
 
-    // শুধু রিসিভার আইডি দিয়ে কুয়েরি করা হলো (টাইপ এবং অর্ডার বাই বাদ দিয়ে)
     const q = query(
       collection(db, "notifications"),
-      where("receiverId", "==", user.uid)
+      where("receiverId", "==", user.uid),
+      orderBy("createdAt", "desc")
     );
 
     const unsub = onSnapshot(q, (snapshot) => {
-      const items = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
-      console.log("Fetched notifications:", items); // কনসোলে ডেটা আসছে কি না দেখার জন্য
-      setNotifications(items);
+      setNotifications(snapshot.docs.map((d) => ({ id: d.id, ...d.data() })));
     });
 
     return () => unsub();
@@ -46,21 +44,21 @@ useEffect(() => {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 rounded-full hover:bg-gray-800 transition text-gray-300 flex items-center justify-center"
+        className="relative p-2 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition text-gray-800 dark:text-gray-200 flex items-center justify-center font-bold text-sm px-3"
       >
-        <span className="text-lg">🔔</span>
+        <span>Notifications</span>
         {unreadCount > 0 && (
-          <span className="absolute top-0 right-0 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-md">
             {unreadCount}
           </span>
         )}
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-gray-900 border border-gray-800 rounded-xl shadow-2xl z-50 p-2 text-left">
-          <div className="flex justify-between items-center px-3 py-2 border-b border-gray-800 mb-2">
-            <h3 className="font-semibold text-sm text-white">Notifications</h3>
-            <span className="text-xs text-gray-400">{notifications.length} total</span>
+        <div className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-2xl z-50 p-2 text-left">
+          <div className="flex justify-between items-center px-3 py-2 border-b border-gray-200 dark:border-gray-800 mb-2">
+            <h3 className="font-semibold text-sm text-gray-900 dark:text-white">Notifications</h3>
+            <span className="text-xs text-gray-500">{notifications.length} total</span>
           </div>
 
           {notifications.length === 0 ? (
@@ -75,11 +73,11 @@ useEffect(() => {
                   setIsOpen(false);
                 }}
                 className={`block p-2.5 rounded-lg mb-1 transition text-xs ${
-                  notif.read ? "bg-gray-900 text-gray-400" : "bg-gray-800/80 text-white font-medium"
-                } hover:bg-gray-800`}
+                  notif.read ? "bg-transparent text-gray-500 dark:text-gray-400" : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white font-medium"
+                } hover:bg-gray-200 dark:hover:bg-gray-700`}
               >
                 <p>{notif.message}</p>
-                <span className="text-[10px] text-gray-500 mt-1 block">
+                <span className="text-[10px] text-gray-400 mt-1 block">
                   {notif.createdAt ? timeAgo(notif.createdAt) : "Just now"}
                 </span>
               </Link>
