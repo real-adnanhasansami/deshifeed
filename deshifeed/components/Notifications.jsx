@@ -12,18 +12,19 @@ export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
+useEffect(() => {
     if (!user) return;
 
+    // শুধু রিসিভার আইডি দিয়ে কুয়েরি করা হলো (টাইপ এবং অর্ডার বাই বাদ দিয়ে)
     const q = query(
       collection(db, "notifications"),
-      where("receiverId", "==", user.uid),
-      where("type", "in", ["post", "comment", "follow"]),
-      orderBy("createdAt", "desc")
+      where("receiverId", "==", user.uid)
     );
 
     const unsub = onSnapshot(q, (snapshot) => {
-      setNotifications(snapshot.docs.map((d) => ({ id: d.id, ...d.data() })));
+      const items = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+      console.log("Fetched notifications:", items); // কনসোলে ডেটা আসছে কি না দেখার জন্য
+      setNotifications(items);
     });
 
     return () => unsub();
