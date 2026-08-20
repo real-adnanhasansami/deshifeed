@@ -77,6 +77,7 @@ export default function ProfilePage() {
           [user.uid]: profile?.displayName || user.displayName || "User",
           [id]: profileUser.displayName || "User",
         },
+        lastMessage: "Started a conversation",
         updatedAt: serverTimestamp(),
       },
       { merge: true }
