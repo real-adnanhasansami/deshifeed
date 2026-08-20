@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
 import ThemeToggle from "./ThemeToggle";
+import Notifications from "./Notifications";
 
 const NAV_LINKS = [
   { href: "/", label: "Feed" },
@@ -20,7 +21,7 @@ export default function Navbar() {
   const { user, profile, signOut } = useAuth();
 
   return (
-    <header className="sticky top-0 z-40 backdrop-blur bg-brand-light/80 dark:bg-brand-dark/80 border-b border-brand-borderLight dark:border-brand-borderDark">
+    <header className="sticky top-0 z-45 backdrop-blur bg-brand-light/80 dark:bg-brand-dark/80 border-b border-brand-borderLight dark:border-brand-borderDark">
       <div className="max-w-feed mx-auto px-4 h-14 flex items-center justify-between gap-3">
         <Link href="/" className="font-extrabold text-lg tracking-tight text-brand-accent">
           DeshiFeed
@@ -43,6 +44,9 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
+          {/* গ্লোবাল নোটিফিকেশন বেল আইকন */}
+          {user && <Notifications />}
+          
           <ThemeToggle />
           {user ? (
             <>
