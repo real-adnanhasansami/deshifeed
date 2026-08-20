@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-brand-light text-gray-900 dark:bg-brand-dark dark:text-gray-100;
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  @apply bg-brand-accent/20;
+}
+
+/* Focus visibility for accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.card {
+  @apply bg-brand-surfaceLight dark:bg-brand-surfaceDark border border-brand-borderLight dark:border-brand-borderDark rounded-xl;
+}
+
+.btn-primary {
+  @apply bg-brand-accent hover:bg-brand-accentDark text-white font-medium rounded-lg px-4 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-secondary {
+  @apply bg-transparent border border-brand-borderLight dark:border-brand-borderDark hover:bg-gray-100 dark:hover:bg-white/5 font-medium rounded-lg px-4 py-2 transition-colors;
+}
+
+.input-field {
+  @apply w-full bg-transparent border border-brand-borderLight dark:border-brand-borderDark rounded-lg px-3 py-2 text-sm placeholder:text-gray-400 focus:border-brand-accent outline-none transition-colors;
+}
+
+.link-accent {
+  @apply text-brand-accent hover:underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
