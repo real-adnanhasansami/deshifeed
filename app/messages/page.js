@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { collection, query, where, onSnapshot, orderBy } from "firebase/firestore";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/lib/AuthContext";
 import Link from "next/link";
@@ -13,10 +13,10 @@ export default function MessagesPage() {
   useEffect(() => {
     if (!user) return;
 
+    // orderBy বাদ দিয়ে শুধু এই কুয়েরি রাখা হলো যাতে সাথে সাথে চ্যাট লিস্ট শো করে
     const q = query(
       collection(db, "chats"),
-      where("participants", "array-contains", user.uid),
-      orderBy("updatedAt", "desc")
+      where("participants", "array-contains", user.uid)
     );
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
