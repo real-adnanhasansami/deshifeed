@@ -15,7 +15,6 @@ export default function Notifications() {
   useEffect(() => {
     if (!user) return;
 
-    // শুধু পোস্ট, কমেন্ট বা ফলো টাইপের নোটিফিকেশনগুলো গ্লোবাল বেল আইকনে দেখাবে
     const q = query(
       collection(db, "notifications"),
       where("receiverId", "==", user.uid),
@@ -44,12 +43,11 @@ export default function Notifications() {
 
   return (
     <div className="relative">
-      {/* গ্লোবাল নোটিফিকেশন বেল আইকন */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 rounded-full hover:bg-gray-800 transition text-gray-300"
+        className="relative p-2 rounded-full hover:bg-gray-800 transition text-gray-300 flex items-center justify-center"
       >
-        🔔
+        <span className="text-lg">🔔</span>
         {unreadCount > 0 && (
           <span className="absolute top-0 right-0 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
             {unreadCount}
@@ -57,9 +55,8 @@ export default function Notifications() {
         )}
       </button>
 
-      {/* ড্রপডাউন প্যানেল */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-gray-900 border border-gray-800 rounded-xl shadow-2xl z-50 p-2">
+        <div className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-gray-900 border border-gray-800 rounded-xl shadow-2xl z-50 p-2 text-left">
           <div className="flex justify-between items-center px-3 py-2 border-b border-gray-800 mb-2">
             <h3 className="font-semibold text-sm text-white">Notifications</h3>
             <span className="text-xs text-gray-400">{notifications.length} total</span>
