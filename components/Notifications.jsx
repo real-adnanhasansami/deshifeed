@@ -46,7 +46,7 @@ export default function Notifications() {
         onClick={() => setIsOpen(!isOpen)}
         className="relative px-3 py-1.5 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition text-xs font-semibold text-gray-800 dark:text-gray-200 flex items-center gap-1.5"
       >
-        <span>🔔 Notifs</span>
+        <span>Notification</span>
         {unreadCount > 0 && (
           <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
             {unreadCount}
