@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "next/navigation";
-import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp, doc, updateDb, getDoc, setDoc } from "firebase/firestore";
+import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp, doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/lib/AuthContext";
 
@@ -37,14 +37,14 @@ export default function ChatDetailPage() {
     setNewMessage("");
 
     try {
-      // ১. চ্যাটের ভেতরে মেসেজ সাব-কালেকশনে সেভ করা
+      // ১. চ্যাটের ভেতরে মেসেজ সেভ করা
       await addDoc(collection(db, "chats", chatId, "messages"), {
         senderId: user.uid,
         text: textToSend,
         createdAt: serverTimestamp(),
       });
 
-      // ২. মূল চ্যাট ডকুমেন্ট আপডেট করা (ইনবক্সে লাস্ট মেসেজ দেখানোর জন্য)
+      // ২. ইনবক্সের জন্য মূল চ্যাট আপডেট করা
       const chatRef = doc(db, "chats", chatId);
       const chatSnap = await getDoc(chatRef);
       

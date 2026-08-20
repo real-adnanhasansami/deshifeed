@@ -13,7 +13,6 @@ export default function MessagesPage() {
   useEffect(() => {
     if (!user) return;
 
-    // ইউজার যে যে চ্যাটে যুক্ত আছে সেগুলো ফেচ করার কুয়েরি
     const q = query(
       collection(db, "chats"),
       where("participants", "array-contains", user.uid),
@@ -41,8 +40,7 @@ export default function MessagesPage() {
           <p className="text-gray-400 text-sm text-center py-6">No messages found.</p>
         ) : (
           chats.map((chat) => {
-            // অন্য ইউজারের আইডি বের করা
-            const otherUserId = chat.participants.find((id) => id !== user.uid);
+            const otherUserId = chat.participants?.find((id) => id !== user.uid);
             return (
               <Link
                 key={chat.id}
